@@ -110,18 +110,18 @@ $$;
 
 DO $$
 DECLARE
+    --1. Declaracao de cursor
     cur_prep_exam_salary REFCURSOR;
     v_salary INTEGER;
     prep_exam INTEGER;
     v_tupla RECORD;
 BEGIN
-    --1. Declaracao de cursor
+    --2. Abertura do cursor
     OPEN cur_prep_exam_salary SCROLL
     FOR
         SELECT salary, prep_exam
         FROM tb_student
         WHERE prep_exam = 2 AND salary > 5;
-    --2. Abertura do cursor
     LOOP
     --3. Recuperacao de dados
         FETCH cur_prep_exam_salary INTO v_tupla;
