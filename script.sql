@@ -141,9 +141,33 @@ $$;
 DO $$
 DECLARE
     cur_tupla_nula REFCURSOR;
-    v_ INTEGER;
-    prep_exam INTEGER;
     v_tupla RECORD;
 BEGIN
+    --1. Declaracao de cursor
+    OPEN cur_tupla_nula SCROLL
+    FOR
+        SELECT *
+        FROM tb_student
+        WHERE mother_edu IS NULL OR father_edu IS NULL OR study_time IS NULL OR partner IS NULL OR salary IS NULL OR prep_exam IS NULL OR grade IS NULL;
+    --2. Abertura do cursor
+    LOOP
+    --3. Recuperacao de dados
+        FETCH cur_tupla_nula INTO v_tupla;
+        EXIT WHEN NOT FOUND;
+        if v.tupla IS NULL THEN
+            DELETE * FROM WHERE v_tupla IS NULL;
+        END IF;
+        RAISE NOTICE 'ID: %, Mae: %, Pai: %, Tempo de Estudo: %, Parceiro: %, Salario: %, Preparacao Exame: %, Nota: %', v_tupla.id, v_tupla.mother_edu, v_tupla.father_edu, v_tupla.study_time, v_tupla.partner, v_tupla.salary, v_tupla.prep_exam, v_tupla.grade;
+    END LOOP;
+    --mostre as tuplas remanescentes em ordem decrescente
+    LOOP
+        FETCH cur_tupla_nula INTO v_tupla;
+        EXIT WHEN NOT FOUND;
+        RAISE NOTICE 'ID: %, Mae: %, Pai: %, Tempo de Estudo: %, Parceiro: %, Salario: %, Preparacao Exame: %, Nota: %', v_tupla.id, v_tupla.mother_edu, v_tupla.father_edu, v_tupla.study_time, v_tupla.partner, v_tupla.salary, v_tupla.prep_exam, v_tupla.grade;
+    END LOOP;
+
+    --4. Fechamento do cursor
+    CLOSE cur_tupla_nula;
+END
 
 -- ----------------------------------------------------------------
