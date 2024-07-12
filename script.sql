@@ -155,7 +155,7 @@ BEGIN
         FETCH cur_tupla_nula INTO v_tupla;
         EXIT WHEN NOT FOUND;
         if v.tupla IS NULL THEN
-            DELETE * FROM WHERE v_tupla IS NULL;
+            DELETE FROM tb_student WHERE cur_tupla_nula IS NULL;
         END IF;
         RAISE NOTICE 'ID: %, Mae: %, Pai: %, Tempo de Estudo: %, Parceiro: %, Salario: %, Preparacao Exame: %, Nota: %', v_tupla.id, v_tupla.mother_edu, v_tupla.father_edu, v_tupla.study_time, v_tupla.partner, v_tupla.salary, v_tupla.prep_exam, v_tupla.grade;
     END LOOP;
@@ -169,5 +169,5 @@ BEGIN
     --4. Fechamento do cursor
     CLOSE cur_tupla_nula;
 END
-
+$$;
 -- ----------------------------------------------------------------
